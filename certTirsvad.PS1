@@ -19,6 +19,28 @@ param(
     [bool]$InstallInStore = $true
 )
 
+# Need to run as admin to create the certificate
+if (!
+    #current role
+    (New-Object Security.Principal.WindowsPrincipal(
+        [Security.Principal.WindowsIdentity]::GetCurrent()
+    #is admin?
+    )).IsInRole(
+        [Security.Principal.WindowsBuiltInRole]::Administrator
+    )
+) {
+    #elevate script and exit current non-elevated runtime
+    Start-Process `
+        -FilePath 'powershell' `
+        -ArgumentList (
+            #flatten to single array
+            '-File', $MyInvocation.MyCommand.Source, $args `
+            | %{ $_ }
+        ) `
+        -Verb RunAs
+    exit
+}
+
 # Generate the self-signed certificate
 Write-Output "Generating self-signed certificate for application/DLL signing..."
 $cert = New-SelfSignedCertificate -Subject "$CertSubject, $CertOrganization, $CertOrganizationUnit, $CertCountry" -Type CodeSigningCert -KeyExportPolicy Exportable -KeyLength 2048 -HashAlgorithm SHA256 -NotAfter (Get-Date).AddYears($CertValidityYears)
