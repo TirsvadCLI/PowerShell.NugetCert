@@ -89,3 +89,6 @@ if ($InstallInStore) {
 
 # Output the certificate thumbprint
 Write-Output "Certificate Thumbprint: $($cert.Thumbprint)"
+
+# Pause execution for 3000 milliseconds (3 seconds)  
+Start-Sleep -Milliseconds 3000
