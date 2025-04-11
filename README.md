@@ -5,7 +5,7 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-# Nuget Selfsigned Certificate
+# ![Logo][Logo] Nuget Selfsigned Certificate
 
 ## Overview
 `certTirsvad.PS1` is a PowerShell script designed to generate self-signed certificates for application or DLL signing. It automates the process of creating, exporting, and optionally installing certificates in the local certificate store. This is particularly useful for developers who need certificates for signing NuGet packages or other code artifacts.
